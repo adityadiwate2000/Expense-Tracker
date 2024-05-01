@@ -1,0 +1,54 @@
+<!-- login.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+Login - My Expense Tracker
+{% endblock %}
+
+{% block content1 %}
+<h1>Login to My Expense Tracker</h1>
+<!-- Display form errors -->
+{% if form.non_field_errors %}
+<div class="alert alert-danger">
+    {% for error in form.non_field_errors %}
+    {{ error }}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Login form -->
+<form method="post">
+    {% csrf_token %}
+    <!-- Display username field with potential error -->
+    <div class="mb-3">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {% if form.username.errors %}
+        <div class="text-danger">
+            {% for error in form.username.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <!-- Display password field with potential error -->
+    <div class="mb-3">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        {% if form.password.errors %}
+        <div class="text-danger">
+            {% for error in form.password.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+{% endblock %}
+

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home - My Expense Tracker
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to My Expense Tracker</h1>
+    <p>
+        <a href="{% url 'add_expense' %}" class="btn btn-primary">Add Expense</a>
+        <a href="{% url 'expense_list' %}" class="btn btn-primary">Expense List</a>
+    </p>
+{% endblock %}

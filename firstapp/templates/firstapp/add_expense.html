@@ -1,0 +1,34 @@
+<!-- add_expense.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Add Expense - My Expense Tracker
+{% endblock %}
+
+{% block content1 %}
+    <center>
+    <h1>Add New Expense</h1>
+    <!-- Add expense form -->
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" id="amount" name="amount" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" class="form-control" id="category" name="category" required>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Expense</button>
+    </form>
+    </center>
+{% endblock %}

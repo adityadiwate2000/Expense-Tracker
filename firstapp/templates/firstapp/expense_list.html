@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Expense List - My Expense Tracker
+{% endblock %}
+
+{% block content1 %}
+    <center>
+        <h1>Expense List</h1>
+        {% if expenses %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a,b,c,d,e in expenses %}
+                        <tr>
+                            <td>{{ e }}</td>
+                            <td>{{ d }}</td>
+                            <td>{{ c }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5">No expenses recorded.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No expenses recorded.</p>
+        {% endif %}
+    </center>
+{% endblock %}

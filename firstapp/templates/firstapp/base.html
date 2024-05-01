@@ -1,0 +1,46 @@
+<!-- templates/firstapp/base.html -->
+
+<!DOCTYPE html>
+{% load static %}  <!-- Make sure to load the static tag at the top -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Expense Tracker{% endblock %}</title>
+    <!-- Include any additional meta tags, stylesheets, or scripts here -->
+</head>
+<body>
+    <header>
+        <center><h1>Expense Tracker</h1></center>
+        <nav>
+            <a href="{% url 'login' %}">Login</a>
+        </nav>
+    </header>
+<center>
+    <main>
+        {% block content1 %}
+        <!-- Default content for child templates -->
+        {% endblock %}
+    </main>
+</center>
+    <style>
+    body {
+            background-image: url('{% static "images/background.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* Additional CSS styles for content */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+
+
+</body>
+</html>
+
