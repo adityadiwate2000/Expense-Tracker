@@ -6,7 +6,7 @@ from .models import Expense
 class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = ['title', 'amount', 'category', 'date']
+        fields = ['amount', 'category', 'date']
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)

@@ -17,11 +17,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for a,b,c,d,e in expenses %}
+                    {% for a,b,c,d in expenses %}
                         <tr>
-                            <td>{{ e }}</td>
                             <td>{{ d }}</td>
                             <td>{{ c }}</td>
+                            <td>{{ b }}</td>
                         </tr>
                     {% empty %}
                         <tr>

@@ -54,8 +54,8 @@ def add_expense_view(request):
             cursor = connection.cursor()
 
             # Example: Insert new expense into MySQL
-            query = "INSERT INTO firstapp_expense (title, amount, category, date) VALUES (%s, %s, %s, %s)"
-            cursor.execute(query, (form.cleaned_data['title'], form.cleaned_data['amount'], form.cleaned_data['category'], form.cleaned_data['date']))
+            query = "INSERT INTO firstapp_expense (amount, category, date) VALUES (%s, %s, %s)"
+            cursor.execute(query, (form.cleaned_data['amount'], form.cleaned_data['category'], form.cleaned_data['date']))
             connection.commit()
 
             cursor.close()
