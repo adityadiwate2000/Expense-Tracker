@@ -7,6 +7,8 @@ from django.db import connection
 from .models import Expense
 import mysql.connector
 from .forms import ExpenseForm
+from django.db.models import Sum
+
 from django.db.utils import OperationalError  # Import OperationalError
 
 
@@ -73,32 +75,47 @@ from mysql.connector import Error
 
 def expense_list(request):
     try:
+        # Connect to MySQL database
         connection = mysql.connector.connect(
             host='localhost',
             user='root',
             password='Mysqljobde@5',
             database='expense_db'
         )
+
         if connection.is_connected():
             cursor = connection.cursor()
+
+            # Fetch expenses from the database
             cursor.execute("SELECT * FROM firstapp_expense")
             expenses = cursor.fetchall()
+
+            # Fetch monthly expenses using SQL aggregation
+            cursor.execute("""
+                SELECT YEAR(date) AS year, MONTH(date) AS month, SUM(amount) AS total_amount
+                FROM firstapp_expense
+                GROUP BY YEAR(date), MONTH(date)
+                ORDER BY YEAR(date), MONTH(date)
+            """)
+            monthly_expenses = cursor.fetchall()
+
+            # Close cursor and connection
             cursor.close()
             connection.close()
-            return render(request, 'firstapp/expense_list.html', {'expenses': expenses})
+
+            # Print monthly expenses for debugging
+            for expense in monthly_expenses:
+                print(f"Year: {expense[0]}, Month: {expense[1]}, Total Amount: {expense[2]}")
+
+            # Render template with fetched data
+            return render(request, 'firstapp/expense_list.html', {'expenses': expenses, 'monthly_expenses': monthly_expenses})
         else:
             return render(request, 'error.html', {'message': 'Database connection failed.'})
-    except Error as e:
+
+    except mysql.connector.Error as e:
         print(f"Error connecting to database: {e}")
         return render(request, 'error.html', {'message': 'Database error occurred.'})
-
-
 def result(request):
-    # Example data (replace with your own data)
-    # result_data = {
-    #     'message': 'Your result message goes here!',
-    #     'data': ['Expense 1', 'Expense 2', 'Expense 3'],  # Example list of expenses
-    # }
 
     # Render the template 'result.html' with the provided context data
     return render(request, 'firstapp/result.html')

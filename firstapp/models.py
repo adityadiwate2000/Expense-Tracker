@@ -6,4 +6,4 @@ class Expense(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return self.title
+        return f"Expense - Amount: {self.amount}, Category: {self.category}, Date: {self.date}"
