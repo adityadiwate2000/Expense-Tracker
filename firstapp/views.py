@@ -75,6 +75,13 @@ from mysql.connector import Error
 
 def expense_list(request):
     try:
+        # Define month names mapping
+        month_names = {
+            1: 'January', 2: 'February', 3: 'March', 4: 'April',
+            5: 'May', 6: 'June', 7: 'July', 8: 'August',
+            9: 'September', 10: 'October', 11: 'November', 12: 'December'
+        }
+
         # Connect to MySQL database
         connection = mysql.connector.connect(
             host='localhost',
@@ -97,24 +104,37 @@ def expense_list(request):
                 GROUP BY YEAR(date), MONTH(date)
                 ORDER BY YEAR(date), MONTH(date)
             """)
+
             monthly_expenses = cursor.fetchall()
 
             # Close cursor and connection
             cursor.close()
             connection.close()
 
-            # Print monthly expenses for debugging
+            # Process monthly expenses to add month names
+            processed_monthly_expenses = []
             for expense in monthly_expenses:
-                print(f"Year: {expense[0]}, Month: {expense[1]}, Total Amount: {expense[2]}")
+                year = expense[0]
+                month_number = expense[1]
+                total_amount = expense[2]
+                month_name = month_names.get(month_number, '')  # Get month name from dictionary
+                processed_monthly_expenses.append({
+                    'year': year,
+                    'month': month_number,
+                    'month_name': month_name,
+                    'total_amount': total_amount
+                })
 
             # Render template with fetched data
-            return render(request, 'firstapp/expense_list.html', {'expenses': expenses, 'monthly_expenses': monthly_expenses})
+            return render(request, 'firstapp/expense_list.html', {'expenses': expenses, 'monthly_expenses': processed_monthly_expenses})
         else:
             return render(request, 'error.html', {'message': 'Database connection failed.'})
 
     except mysql.connector.Error as e:
         print(f"Error connecting to database: {e}")
         return render(request, 'error.html', {'message': 'Database error occurred.'})
+
+
 def result(request):
 
     # Render the template 'result.html' with the provided context data

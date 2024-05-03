@@ -9,9 +9,10 @@
 {% block content1 %}
     <center>
     <h1>Add New Expense</h1>
-        <table border="4"> <!-- Define a table with borders -->
+        <table border="4" style="width: 400px; height: 200px;"> <!-- Define a table with borders -->
         <tr>
             <td>
+                <center>
                 <form method="post">
                     {% csrf_token %}
                     <!-- Display each form field within a table row and cell -->
@@ -27,6 +28,7 @@
                         <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control" id="date" name="date" required>
                     </p>
+                    </center>
                     <center>
                     <button type="submit">Add Expense</button>
                     </center>

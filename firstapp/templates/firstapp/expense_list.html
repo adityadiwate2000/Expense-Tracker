@@ -3,12 +3,13 @@
 {% block title %}
     Expense List - My Expense Tracker
 {% endblock %}
+{% load custom_filters %}
 
 {% block content1 %}
-    <center>
+
         <h1>Expense List</h1>
         {% if expenses %}
-            <table border="4">
+            <table border="4" style="width: 400px; height: 200px;">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -17,6 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     {% for a,b,c,d in expenses %}
                         <tr>
                             <td>{{ d }}</td>
@@ -37,23 +39,31 @@
     <center>
     {% if monthly_expenses %}
         <h2>Monthly Expense</h2>
-    <table border="5">
+    <table border="5" style="width: 300px; height: 100px;">
         <thead>
-            <tr>
-                <th>Year</th>
-                <th>Month</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for a,b,c in monthly_expenses %}
-                <tr>
-                    <td>{{ a }}</td>
-                    <td>{{ b }}</td>
-                    <td>{{ c }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Month Name</th>
+      <th>Total Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for monthly_expense in monthly_expenses %}
+    <tr>
+      <td>{{ monthly_expense.year }}</td>
+      <td>{{ monthly_expense.month }}</td>
+      <td>{{ monthly_expense.month_name }}</td>
+      <td>{{ monthly_expense.total_amount }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+        <center>
+        <p>
+        <a href="{% url 'add_expense' %}" style="display: inline-block; padding: 10px 20px; font-size: 16px; text-decoration: none; background-color: #4682b4; color: #fff; border-radius: 5px;" class="btn btn-primary">Add Expense</a>
+        </p>
+        </center>
     </table>
 {% else %}
     <p>No monthly expenses recorded.</p>
